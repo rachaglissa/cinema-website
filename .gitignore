@@ -1,0 +1,44 @@
+# Symfony Framework Bundle
+/.env.local
+/.env.local.php
+/.env.*.local
+/config/secrets/prod/prod.decrypt.private.php
+/public/bundles/
+var/
+vendor/
+
+# Symfony Webpack Encore Bundle
+/node_modules/
+public/build/
+npm-debug.log
+yarn-error.log
+
+# IDE and OS specific files
+# macOS
+.DS_Store
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Icon?
+
+# Visual Studio Code
+.vscode/
+
+# JetBrains IDEs
+.idea/
+
+# Log files
+*.log
+
+# Backup files
+*~ 
+*.bak
+*.swp
+
+# Other temporary files
+*.tmp
+*.temp
+
+# Composer dependencies (if using composer.lock)
+composer.lock

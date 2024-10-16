@@ -1,0 +1,104 @@
+{# templates/footer.html.twig #}
+{% block javascripts %}
+    {{ encore_entry_script_tags('app') }}
+    <script>
+        const movies = {{ movies|json_encode|raw }};
+
+        function searchMovies(query) {
+            const autocompleteList = document.getElementById('autocomplete-list');
+            autocompleteList.innerHTML = ''; 
+
+            if (!query) {
+                return; 
+            }
+
+            const filteredMovies = movies.filter(movie => movie.title.toLowerCase().includes(query.toLowerCase()));
+            updateMovieList(filteredMovies); 
+        }
+
+        function updateMovieList(filteredMovies) {
+            const movieContainer = document.getElementById('movieContainer');
+            movieContainer.innerHTML = ''; 
+
+            if (filteredMovies.length === 0) {
+                const noMoviesMessage = document.createElement('p');
+                noMoviesMessage.textContent = 'Aucun film trouvé.';
+                movieContainer.appendChild(noMoviesMessage);
+                return;
+            }
+
+            filteredMovies.forEach(movie => {
+                const movieItem = document.createElement('div');
+                movieItem.classList.add('movie-item');
+
+                const mov1Div = document.createElement('div');
+                mov1Div.classList.add('mov1');
+
+                const img = document.createElement('img');
+                img.src = `https://image.tmdb.org/t/p/w500/${movie.poster_path}`;
+                img.alt = movie.title;
+
+                const movDiv = document.createElement('div');
+                movDiv.classList.add('mov');
+
+                const title = document.createElement('h4');
+                title.textContent = movie.title;
+
+                const releaseDate = document.createElement('p');
+                releaseDate.textContent = `Sortie : ${movie.release_date}`;
+
+                const overview = document.createElement('p');
+                overview.textContent = movie.overview;
+
+                const starRatingDiv = document.createElement('div');
+                starRatingDiv.classList.add('star-rating');
+                for (let i = 0; i < 5; i++) {
+                    const starSpan = document.createElement('span');
+                    starSpan.textContent = i < movie.stars ? '★' : '☆';
+                    starRatingDiv.appendChild(starSpan);
+                }
+
+                const averageRating = document.createElement('p');
+                averageRating.textContent = `Note moyenne : ${movie.vote_average} / 10`;
+
+                const button = document.createElement('button');
+                button.textContent = 'Lire les détails';
+                button.onclick = () => openModal(
+                    movie.title,
+                    movie.trailerKey,
+                    movie.overview,
+                    movie.stars
+                ); 
+
+                movDiv.appendChild(title);
+                movDiv.appendChild(releaseDate);
+                movDiv.appendChild(overview);
+                movDiv.appendChild(starRatingDiv);
+                movDiv.appendChild(averageRating);
+                movDiv.appendChild(button);
+
+                mov1Div.appendChild(img);
+                mov1Div.appendChild(movDiv);
+                movieItem.appendChild(mov1Div);
+                movieContainer.appendChild(movieItem);
+            });
+        }
+
+        function openModal(title, trailerKey, overview, stars) {
+            document.getElementById('movieTitle').textContent = title;
+            document.getElementById('movieDescription').textContent = overview;
+
+            const starRating = document.getElementById('modalStarRating');
+            starRating.innerHTML = Array.from({ length: 5 }, (_, i) => `<span>${i < stars ? '★' : '☆'}</span>`).join('');
+
+            const movieVideo = document.getElementById('movieVideo');
+            movieVideo.src = `https://www.youtube.com/embed/${trailerKey}`;
+
+            document.getElementById('movieModal').style.display = 'block';
+        }
+
+        function closeModal() {
+            document.getElementById('movieModal').style.display = 'none';
+        }
+    </script>
+{% endblock %}

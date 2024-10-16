@@ -1,0 +1,23 @@
+webpack_encore:
+    output_path: '%kernel.project_dir%/public/build'
+    script_attributes:
+        defer: true
+    # link_attributes:
+    #     'data-turbo-track': reload
+    # crossorigin: 'anonymous'
+    # preload: true
+    strict_mode: true # Recommended to catch errors
+    # builds:
+    #     frontend: '%kernel.project_dir%/public/frontend/build'
+
+framework:
+    assets:
+        json_manifest_path: '%kernel.project_dir%/public/build/manifest.json'
+
+when@prod:
+    webpack_encore:
+        cache: true
+
+when@test:
+    webpack_encore:
+        strict_mode: false

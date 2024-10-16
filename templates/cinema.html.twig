@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cinéma</title>
+    {% block stylesheets %}
+        {{ encore_entry_link_tags('app_style') }}
+    {% endblock %}
+</head>
+<body>
+    {% include 'header.html.twig' %}
+
+    <div class="video-container">
+        <div class="featured-movie">
+            {% if bestMovie %}
+                <h2>Meilleur Film du Genre Sélectionné : {{ bestMovie.title }}</h2>
+                {% if trailerKey %}
+                    <div class="video-player">
+                        <iframe width="560" height="315" src="https://www.youtube.com/embed/{{ trailerKey }}" frameborder="0" allowfullscreen></iframe>
+                    </div>
+                {% else %}
+                    <p>Aucune bande-annonce disponible pour le meilleur film.</p>
+                {% endif %}
+            {% else %}
+                <p>Aucun film disponible pour le genre sélectionné.</p>
+            {% endif %}
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="genre-menu">
+            <h3>Genres</h3>
+            <form>
+                {% for genre in genres %}
+                    <label>
+                        <input type="radio" name="genre_id" value="{{ genre.id }}" {% if genre.id == selectedGenreId %} checked {% endif %}>
+                        {{ genre.name }}
+                    </label><br>
+                {% endfor %}
+                <button type="submit">Filtrer</button>
+            </form>
+        </div>
+
+        {% include 'movie_list.html.twig' %}
+    </div>
+
+    {% include 'movie_modal.html.twig' %}
+    
+    {% include 'footer.html.twig' %}
+</body>
+</html>

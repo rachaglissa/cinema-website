@@ -1,0 +1,22 @@
+services:
+    # Cela active l'autoconfiguration des services, en particulier pour les contrôleurs
+    _defaults:
+        autowire: true      # Active l'injection automatique des dépendances
+        autoconfigure: true # Active l'ajout automatique de tags (ex: pour les événements, les contrôleurs, etc.)
+        public: false       # Par défaut, tous les services sont privés
+
+    # Ajout automatique de tous les services dans le dossier src/ comme services
+    App\:
+        resource: '../src/*'
+        exclude: '../src/{DependencyInjection,Entity,Tests,Kernel.php}'
+
+    # Si vous avez des contrôleurs dans des sous-dossiers spécifiques, vous pouvez les ajouter ici.
+    App\Controller\:
+        resource: '../src/Controller'
+        tags: ['controller.service_arguments']
+
+    # Configuration du service MovieApiService
+    App\Service\MovieApiService:
+        arguments:
+            $client: '@http_client'   # Injection du client HTTP Symfony
+            $apiKey: '%env(TMDB_API_KEY)%'  # Injection de la clé API depuis .env

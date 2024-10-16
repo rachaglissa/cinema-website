@@ -1,0 +1,25 @@
+{# templates/movie_list.html.twig #}
+<div class="movie-list">
+    <h3>Films</h3>
+    <div id="movieContainer" class="movie-container">
+        {% for movie in movies %}
+            <div class="movie-item">
+                <div class="mov1">
+                    <img src="https://image.tmdb.org/t/p/w500/{{ movie.poster_path }}" alt="{{ movie.title }}">
+                    <div class="mov">
+                        <h4>{{ movie.title }}</h4>
+                        <p>Sortie : {{ movie.release_date }}</p>
+                        <p>{{ movie.overview }}</p>
+                        <div class="star-rating">
+                            {% for i in 1..5 %}
+                                <span>{{ i <= movie.stars ? '★' : '☆' }}</span>
+                            {% endfor %}
+                        </div>
+                        <p>Note moyenne : {{ movie.vote_average }} / 10</p>
+                        <button onclick="openModal('{{ movie.title|escape('js') }}', '{{ movie.trailerKey|escape('js') }}', '{{ movie.overview|escape('js') }}', {{ movie.stars }})">Lire les détails</button>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</div>
