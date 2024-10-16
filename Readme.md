@@ -28,3 +28,14 @@ Ce projet est un site web de cinéma similaire à Allociné, développé avec Sy
 - Docker
 - Node.js et npm (pour gérer Webpack)
 
+## Installation
+composer install
+npm install
+docker-compose up -d
+
+### Explication des commandes Webpack :
+- `npm run dev` : Compile les fichiers pour le développement avec des fichiers non minifiés et avec des sourcemaps.
+- `npm run dev --watch` : Surveille les fichiers pour détecter toute modification et recompiler automatiquement.
+- `npm run build` : Optimise les fichiers pour la production (minifiés, sans sourcemaps) pour une performance maximale.
+
+Ce `README.md` donne une vue complète de ton projet et permet de reproduire facilement l'environnement de développement.
